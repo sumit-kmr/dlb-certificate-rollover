@@ -6,7 +6,8 @@
     - AmazonSNSFullAccess
 
 2. Create a private Elastic Container Registry (ECR) to store the container image
-    **Important** Please make sure to use appropriate aws region and use the same region across all the services used for this asset
+    
+    **Important:** Please make sure to use appropriate aws region and use the same region across all the services used for this asset
 
 3. Create a blank github repository and make sure you have a "main" branch. Create one more feature/develop branch from main branch.
 
@@ -24,7 +25,7 @@
         - AWS_REGION
         - AWS_SNS_TOPIC_ARN        [aws sns topic arn which will be used to send email alerts]
 
-    **Important** Please make sure that the anypoint credentials have sufficient access to modify the dedicated load balancer
+    **Important:** Please make sure that the anypoint credentials have sufficient access to modify the dedicated load balancer
 
 5. Now, push the project files to the feature/develop branch and raise a PR and merge into the main branch. This will trigger the github workflow which will build and push the image to AWS ECR.
 
