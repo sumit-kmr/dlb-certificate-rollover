@@ -26,6 +26,7 @@
         - AWS_SNS_TOPIC_ARN        [aws sns topic arn which will be used to send email alerts]
 
     **Important:** Please make sure that the anypoint credentials have sufficient access to modify the dedicated load balancer
+    
     *Note:*  You might not know some of the repo variables at this point, please keep some placeholder for now and you'll be able to get the values by the end of these steps.
 
 5. Now, push the project files to the feature/develop branch and raise a PR and merge into the main branch. This will trigger the github workflow which will build and push the image to AWS ECR.
@@ -35,6 +36,7 @@
     - Environment variables: Add an env variable TIME_WINDOW_IN_HRS and set the value as 24 (or whatever time window you want the function to check for new/updated certificates)
 
 7. Create a standard SNS topic and create an Email subscription on this topic. Complete the verification step for this email.
+    
     *Note:* Please add this SNS topic ARN in the github repo variable AWS_SNS_TOPIC_ARN
 
 8. Create an EventBridge Schedule which will trigger the lambda function on recurring basis, making sure the recurring interval is same as the time window you provided in the lambda function (TIME_WINDOW_IN_HRS)
