@@ -1,7 +1,7 @@
 #!/bin/bash
-# dlb_name/ca-cert/cert_name.pem
-# dlb_name/ssl-cert/ssl-public.pem
-# dlb_name/ssl-cert/ssl-private.pem
+# dlb_name/client-cert/cert_name.pem
+# dlb_name/server-cert/ssl-public.pem
+# dlb_name/server-cert/ssl-private.pem
 #
 signv4js="`cat javascript_util.js`"
 aws4js="`cat aws4.js`"
@@ -186,7 +186,7 @@ function update_cloudhub_dlb_cert {
       cur_cert="${cur_cert//[$'\t\r\n']}"     # removing \t \r \n characters
 
       if [[ "`echo $cur_cert`" == *"$dlbName"* ]]; then
-        if [[ "`echo $cur_cert`" == *"ca-cert"* ]]; then
+        if [[ "`echo $cur_cert`" == *"client-cert"* ]]; then
           get_secret "$cur_cert"
           # Checking if certificate is valid by trying to check its expiry date
           node javascript_util "days_to_expire"
@@ -200,12 +200,12 @@ function update_cloudhub_dlb_cert {
           cp tempFile "$dir1/client$j"
           rm tempFile
           ca_cert_present=true
-        elif [[ "`echo $cur_cert`" == *"ssl-cert"* && "`echo $cur_cert`" == *"public"* ]]; then
+        elif [[ "`echo $cur_cert`" == *"server-cert"* && "`echo $cur_cert`" == *"public"* ]]; then
           get_secret "$cur_cert"
           cp tempFile "$dir2/$cert_file_name"
           rm tempFile
           ssl_cert_present=true
-        elif [[ "`echo $cur_cert`" == *"ssl-cert"* && "`echo $cur_cert`" == *"private"* ]]; then
+        elif [[ "`echo $cur_cert`" == *"server-cert"* && "`echo $cur_cert`" == *"private"* ]]; then
           get_secret "$cur_cert"
           cp tempFile "$dir2/$private_key_file_name"
           rm tempFile
@@ -383,7 +383,7 @@ function alert_exp_cert {
     do 
       cur_cert=$(sed -n "$j p" certList)
       cur_cert="${cur_cert//[$'\t\r\n']}"
-      if [[ "`echo $cur_cert`" == *"ca-cert"* || ( "`echo $cur_cert`" == *"ssl-cert"* && "`echo $cur_cert`" == *"public"* ) ]]; then
+      if [[ "`echo $cur_cert`" == *"client-cert"* || ( "`echo $cur_cert`" == *"server-cert"* && "`echo $cur_cert`" == *"public"* ) ]]; then
         get_secret "$cur_cert"
         node javascript_util "days_to_expire"
         days_to_expire=$(sed -n "1 p" daysToExpire)
