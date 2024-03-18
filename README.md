@@ -40,3 +40,8 @@
     *Note:* Please add this SNS topic ARN in the github repo variable AWS_SNS_TOPIC_ARN
 
 8. Create an EventBridge Schedule which will trigger the lambda function on recurring basis, making sure the recurring interval is same as the time window you provided in the lambda function (TIME_WINDOW_IN_HRS)
+
+9. Certificates needs to be stored on Secrets Manager in the following format:
+    - Server private key: <dlb_name>/server-cert/ssl-private.pem
+    - Server public key/certificate: <dlb_name>/server-cert/ssl-public.pem
+    - Client public key/certificate: <dlb_name>/client-cert/<cert_name>
